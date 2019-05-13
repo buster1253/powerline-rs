@@ -3,7 +3,7 @@ name = "powerline-rs"
 version = "0.1.0"
 authors = ["buster1253 <petterdberven@hotmail.com>"]
 edition = "2018"
-build = "build.rs"
+#build = "build.rs"
 
 [dependencies]
 
