@@ -14,29 +14,55 @@ fn main() {
         parsers: vec![&path::PathParser::git, &path::PathParser::default],
     };
 
-    let fg = String::from("\x1B[38;2;");
-    let bg = String::from("\x1B[48;2;");
+    let sym = String::from("\u{e0b0}");
+    let esc = String::from("\x1B[");
+    let fg = esc.clone() + "3";
+    let bg = esc.clone() + "4";
 
-    //let purple = "177;98;134m";
-    //let orange = "214;93;14m";
+    let black   = "0";
+    let red     = "1";
+    let green   = "2";
+    let orange  = "3";
+    let blue    = "4";
+    let magenta = "5";
+    let cyan    = "6";
+    let white   = "7";
+
+    let fg_black   = fg.clone() + black + "m";
+    let fg_red     = fg.clone() + red + "m";
+    let fg_green   = fg.clone() + green + "m";
+    let fg_orange  = fg.clone() + orange + "m";
+    let fg_blue    = fg.clone() + blue + "m";
+    let fg_magenta = fg.clone() + magenta + "m";
+    let fg_cyan    = fg.clone() + cyan + "m";
+    let fg_white   = fg.clone() + white + "m";
+
+    let bg_black=bg.clone() + black + "m";
+    let bg_red=bg.clone() + red + "m";
+    let bg_green=bg.clone() + green + "m";
+    let bg_orange=bg.clone() + orange + "m";
+    let bg_blue=bg.clone() + blue + "m";
+    let bg_magenta=bg.clone() + magenta + "m";
+    let bg_cyan=bg.clone() + cyan + "m";
+    let bg_white=bg.clone() + white + "m";
 
     let path_part = PromptPart {
-        fg: fg.clone() + "40;40;40m",
-        bg: bg.clone() + "104;157;106m",
-        inverse: fg.clone() + "104;157;106m",
+        fg: fg_black.clone(),
+        bg: bg_cyan.clone(),
+        inverse: fg_cyan.clone(),
         text: path_parser.path(2)
     };
 
     let jobs = PromptPart {
-        bg: bg.clone() + "69;133;136m",
-        fg: fg.clone() + "40;40;40m",
-        inverse: fg.clone() + "69;133;136m",
+        fg: fg_black.clone(),
+        bg: bg_blue.clone(),
+        inverse: fg_blue.clone(),
         text: jobs::get_jobs()
     };
     let git = PromptPart {
-        fg: fg.clone() + "104;157;106m",
-        bg: bg.clone() + "40;40;40m",
-        inverse: fg.clone() + "40;40;40m",
+        fg: fg_cyan.clone(),
+        bg: bg_black.clone(),
+        inverse: fg_black.clone(),
         text: git::get_branch()
     };
 
@@ -55,7 +81,7 @@ fn main() {
                     parts[i + 1].bg.clone()
                 }
                 else {
-                    String::from("\x1B[38;2;0m")
+                    String::from("\x1B[0m")
                 };
                 print!("%{{{}{}%}} {} %{{{}{}%}}\u{e0b0}",
                        part.fg, part.bg, text, end_bg, part.inverse);
