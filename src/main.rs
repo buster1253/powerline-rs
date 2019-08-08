@@ -1,6 +1,7 @@
 mod jobs;
 mod git;
 mod path;
+mod sshfs;
 
 struct PromptPart {
     fg: String,
@@ -66,12 +67,20 @@ fn main() {
         text: git::get_branch()
     };
 
-    let mut parts = vec![jobs, path_part, git];
-    for i in 0..parts.len() {
-        if parts[i].text.is_none() {
-            parts.remove(i);
-        }
-    }
+    let sshfs = PromptPart {
+        fg: fg_black.clone(),
+        bg: bg_blue.clone(),
+        inverse: fg_blue.clone(),
+        text: sshfs::check_path()
+    };
+
+    let mut parts = vec![jobs, path_part, git, sshfs];
+    parts.retain(|x| !x.text.is_none());
+    //for i in 0..parts.len() {
+        //if parts[i].text.is_none() {
+            //parts.remove(i);
+        //}
+    //}
 
     for i in 0..parts.len() {
         let part = &parts[i];
